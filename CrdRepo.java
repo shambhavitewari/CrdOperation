@@ -9,19 +9,6 @@ import java.lang.instrument.Instrumentation;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.time.LocalTime;
-/**
- * Freshworks Backend Assignment
- * FileEngine.java
- * Purpose: A file-based key-value data store that supports the basic CRD (create, read, and delete) operations 
- * Assumptions made : Client Application/User enters TimeToLive property as parameter to 'create' method for each key
- *                  : 'create' method (CreateEntry) is overloaded to accept the TimeToLive method(optional) as the third parameter
- *                  : If TimeToLive method not specified by user , assumes Int Max value
- *                  : Each value in < Key,Value > pair is a JSONArray , which contains user given JSONObject, Timestamp(time at which Key was created ) and TimeToLive 
- *                  : Main Class " FileEngine" has overloaded constructors which allow either user defined or automatic file path
- *                  : The constructors create a dummy JSONObject and write it into file to avoid FileExceptions 
- * @author Vishnu Mohan
- * @date  5/28/19
- */
 
 @SuppressWarnings({ "serial", "unused" })
 class DuplicateKey extends Exception {
@@ -48,12 +35,7 @@ class ValueSizeExceeded extends Exception{
 public class CrdRepo {
 	private static Instrumentation instrument;
    private final String FilePath; // Making FilePath immutable
-    /**
-     * Parameterized constructor of class FileEngine
-     * @param String 
-     * 
-     * 
-     */
+   
     CrdRepo(String path) throws JSONException {
         FilePath = path;
         JSONObject fill = new JSONObject();
@@ -70,13 +52,7 @@ public class CrdRepo {
         
         
     }
-    /**
-     * Default constructor of class FileEngine
-     * 
-     * 
-     * 
-     */
-    CrdRepo() throws JSONException {
+   epo() throws JSONException {
         FilePath = "D://FileEngine.JSON";
         JSONObject fill = new JSONObject();
         fill.put(" ", " ");      //Fill JSONobject with dummy value
@@ -91,12 +67,7 @@ public class CrdRepo {
          }
         
     }
-    /**
-     * Creates Entry to JSON file , accepting TimeToLive parameter
-     * @param String, JSONObject , integer
-     * @return Returns nothing
-     * @throws user defined DuplicateKey Exception ( If the entered Key already exists in the file )
-     */
+    
     public void CreateEntry(String Key, JSONObject Value, int TimeToLive) throws Exception // Create method, if TimeToLive is provided
     {    
          try {if (Key.length()>32) // Check if Key is more than 32 Char
@@ -143,12 +114,7 @@ public class CrdRepo {
             System.out.println("Caught IO Exception");
         } 
     }
-    /**
-     * Creates Entry to JSON file , when TimeToLive is not given
-     * @param String, JSONObject 
-     * @return Returns nothing
-     * @throws user defined DuplicateKey Exception ( If the entered Key already exists in the file )
-     */
+    
     public void CreateEntry(String Key, JSONObject Value) throws Exception // Create method , if no TimeToLive is specified by user
     {
     	try {if (Key.length()>32) // Check if Key is more than 32 Char
@@ -193,12 +159,7 @@ public class CrdRepo {
             System.out.println("Caught IO Exception");
         }
     }
-    /**
-     * Returns JSONObject for Key, requested by  user
-     * @param String 
-     * @return Returns JSONObject if exists for Key , else returns null in case of exceptions
-     * @throws user defined InvalidKey exception ( No key matches the user given Key) , TimeExceeded exception (If the TimeToLive of Key is exceeded)
-     */
+    
     public JSONObject ReadEntry(String Key) throws Exception //Read method , which returns JSONObject
     {
         
@@ -232,12 +193,7 @@ public class CrdRepo {
         }
 		return null;
     }
-    /**
-     * Deletes/Removes JSONObject for Key, requested by  user
-     * @param String 
-     * @return Returns nothing
-     * @throws user defined InvalidKey exception ( No key matches the user given Key) , TimeExceeded exception (If the TimeToLive of Key is exceeded)
-     */
+    
     public void DeleteEntry(String Key) throws Exception // Delete method , for deleting a given < Key,JSONOBject > pair
     {
        
