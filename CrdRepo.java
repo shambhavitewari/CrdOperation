@@ -35,7 +35,7 @@ class ValueSizeExceeded extends Exception{
 public class CrdRepo {
 	private static Instrumentation instrument;
    private final String FilePath; // Making FilePath immutable
-   
+    
     CrdRepo(String path) throws JSONException {
         FilePath = path;
         JSONObject fill = new JSONObject();
@@ -52,7 +52,13 @@ public class CrdRepo {
         
         
     }
-   CrdRepo() throws JSONException {
+    /**
+     * Default constructor of class FileEngine
+     * 
+     * 
+     * 
+     */
+    CrdRepo() throws JSONException {
         FilePath = "D://FileEngine.JSON";
         JSONObject fill = new JSONObject();
         fill.put(" ", " ");      //Fill JSONobject with dummy value
@@ -67,8 +73,8 @@ public class CrdRepo {
          }
         
     }
-    
-    public void CreateEntry(String Key, JSONObject Value, int TimeToLive) throws Exception // Create method, if TimeToLive is provided
+
+    public void CreateDoc(String Key, JSONObject Value, int TimeToLive) throws Exception // Create method, if TimeToLive is provided
     {    
          try {if (Key.length()>32) // Check if Key is more than 32 Char
         	 throw new KeySizeExceeded();
@@ -115,7 +121,7 @@ public class CrdRepo {
         } 
     }
     
-    public void CreateEntry(String Key, JSONObject Value) throws Exception // Create method , if no TimeToLive is specified by user
+    public void CreateDoc(String Key, JSONObject Value) throws Exception // Create method , if no TimeToLive is specified by user
     {
     	try {if (Key.length()>32) // Check if Key is more than 32 Char
        	 throw new KeySizeExceeded();
@@ -159,8 +165,8 @@ public class CrdRepo {
             System.out.println("Caught IO Exception");
         }
     }
-    
-    public JSONObject ReadEntry(String Key) throws Exception //Read method , which returns JSONObject
+   
+    public JSONObject ReadDoc(String Key) throws Exception //Read method , which returns JSONObject
     {
         
         try (FileReader reader = new FileReader(FilePath)) {
@@ -194,7 +200,7 @@ public class CrdRepo {
 		return null;
     }
     
-    public void DeleteEntry(String Key) throws Exception // Delete method , for deleting a given < Key,JSONOBject > pair
+    public void DeleteDoc(String Key) throws Exception // Delete method , for deleting a given < Key,JSONOBject > pair
     {
        
         try (FileReader reader = new FileReader(FilePath)) //Read JSON file
